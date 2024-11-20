@@ -17,45 +17,17 @@ import javafx.event.EventHandler;
 
 public class GridLayout {
 
-    private GridPane pane;
-
-    // Labels
-    private Label distanceLabel;
-    private Label gasLabel;
-    private Label mileageLabel;
-    private Label numberOfDays;
-    private Label foodCost;
-    private Label hotelCost;
-    private Label attractions;
-    private Label tripCostLabel;
+    private final GridPane pane;
 
     // Input fields
-    private TextField distanceInput;
-    private TextField gasInput;
-    private TextField mileageInput;
-    private TextField numberOfDaysInput;
-    private TextField foodCostInput;
-    private TextField hotelCostInput;
-    private TextField attractionsInput;
-    private TextField tripCostOutput;
-
-    // Buttons
-    private Button calcButton;
-
-    // comboBoxes
-    private ComboBox<String> unitOfSpeedSelect;
-    private ComboBox<String> gasVolumeSelect;
-    private ComboBox<String> gasMileageUnitSelect;
-
-    // Drop Selection Lists
-    private String[] speedUnits = { "miles", "kilometers" };
-    private String[] gasCostUnits = { "dollar/gallon", "dollars/liter" };
-    private String[] gasMileageUnits = { "miles/gallon", "kilometers/liter" };
-
-    // Drop Selections
-    private ObservableList<String> speedUnitList = FXCollections.observableArrayList(speedUnits);
-    private ObservableList<String> gasVolumeList = FXCollections.observableArrayList(gasCostUnits);
-    private ObservableList<String> gasMileageList = FXCollections.observableArrayList(gasMileageUnits);
+    private final TextField distanceInput;
+    private final TextField gasInput;
+    private final TextField mileageInput;
+    private final TextField numberOfDaysInput;
+    private final TextField foodCostInput;
+    private final TextField hotelCostInput;
+    private final TextField attractionsInput;
+    private final TextField tripCostOutput;
 
     public GridLayout() {
 
@@ -67,14 +39,15 @@ public class GridLayout {
         pane.setAlignment(Pos.CENTER);
 
         // Initialize labels
-        distanceLabel = new Label("Distance:");
-        gasLabel = new Label("Gasoline Cost:");
-        mileageLabel = new Label("Gas Mileage");
-        numberOfDays = new Label("Number of Days:");
-        foodCost = new Label("Food Cost");
-        hotelCost = new Label("Hotel Cost");
-        attractions = new Label("Attractions");
-        tripCostLabel = new Label("Total Trip Cost");
+        // Labels
+        Label distanceLabel = new Label("Distance:");
+        Label gasLabel = new Label("Gasoline Cost:");
+        Label mileageLabel = new Label("Gas Mileage");
+        Label numberOfDays = new Label("Number of Days:");
+        Label foodCost = new Label("Food Cost");
+        Label hotelCost = new Label("Hotel Cost");
+        Label attractions = new Label("Attractions");
+        Label tripCostLabel = new Label("Total Trip Cost");
 
         // Initialize input fields
         distanceInput = new TextField();
@@ -84,39 +57,22 @@ public class GridLayout {
         foodCostInput = new TextField();
         hotelCostInput = new TextField();
         attractionsInput = new TextField();
-        tripCostOutput = new TextField("TEST OUTPUT: 2222.2");
+        tripCostOutput = new TextField();
         tripCostOutput.setEditable(false);
 
         // initalize buttons
-        calcButton = new Button("Calculate");
+        // Buttons
+        Button calcButton = new Button("Calculate");
 
         //handler buttons
         CalculateTripHandlerClass calcBtnHandler = new CalculateTripHandlerClass();
-        calcButton.setOnAction(calcBtnHandler);
 
-        // OR use annon function
-        calcButton.setOnAction((ActionEvent e) -> {
-            TripCost tripCost;
-
-            try {
-                tripCost = new TripCost(Double.valueOf(distanceInput.getText()), Double.valueOf(mileageInput.getText()),Double.valueOf(gasInput.getText()));
-
-                tripCostOutput.setText(String.valueOf(tripCost.gasolineCost() ));
-            }
-            catch(Exception e1) {
-                tripCostOutput.setText("");
-                return;
-            }
-
-
-            System.out.println(tripCost.gasolineCost());
-
-        });
 
         //combos
-        unitOfSpeedSelect = new ComboBox<>();
-        gasVolumeSelect = new ComboBox<>();
-        gasMileageUnitSelect = new ComboBox<>();
+        // comboBoxes
+        ComboBox<String> unitForDistance = new ComboBox<>();
+        ComboBox<String> unitForFuelCost = new ComboBox<>();
+        ComboBox<String> unitForEfficiency = new ComboBox<>();
 
 
         // Set preferred width for labels
@@ -142,30 +98,38 @@ public class GridLayout {
         calcButton.setPrefWidth(200);
 
         // Set preferred width & value for dropdowns
-        unitOfSpeedSelect.setPrefWidth(200);
-        unitOfSpeedSelect.setValue("miles");
-        gasVolumeSelect.setValue("dollars/gallon");
-        gasMileageUnitSelect.setValue("miles/gallon");
+        unitForDistance.setPrefWidth(200);
+        unitForDistance.setValue("miles");
+        unitForFuelCost.setValue("dollars/gallon");
+        unitForEfficiency.setValue("miles/gallon");
 
 
         // adding observableLists
-        unitOfSpeedSelect.getItems().addAll(speedUnitList);
-        gasVolumeSelect.getItems().addAll(gasVolumeList);
-        gasMileageUnitSelect.getItems().addAll(gasMileageList);
+        // Drop Selections
+        // Drop Selection Lists
+        String[] speedUnits = {"miles", "kilometers"};
+        ObservableList<String> speedUnitList = FXCollections.observableArrayList(speedUnits);
+        unitForDistance.getItems().addAll(speedUnitList);
+        String[] gasCostUnits = {"dollar/gallon", "dollars/liter"};
+        ObservableList<String> gasVolumeList = FXCollections.observableArrayList(gasCostUnits);
+        unitForFuelCost.getItems().addAll(gasVolumeList);
+        String[] gasMileageUnits = {"miles/gallon", "kilometers/liter"};
+        ObservableList<String> gasMileageList = FXCollections.observableArrayList(gasMileageUnits);
+        unitForEfficiency.getItems().addAll(gasMileageList);
 
         // Add labels and input fields to the grid
         pane.add(distanceLabel, 0, 0);
         pane.add(distanceInput, 1, 0);
-        pane.add(unitOfSpeedSelect, 2, 0);
+        pane.add(unitForDistance, 2, 0);
 
 
         pane.add(gasLabel, 0, 1);
         pane.add(gasInput, 1, 1);
-        pane.add(gasVolumeSelect, 2, 1);
+        pane.add(unitForFuelCost, 2, 1);
 
         pane.add(mileageLabel, 0, 2);
         pane.add(mileageInput, 1, 2);
-        pane.add(gasMileageUnitSelect, 2, 2);
+        pane.add(unitForEfficiency, 2, 2);
 
         pane.add(numberOfDays, 0, 3);
         pane.add(numberOfDaysInput, 1, 3);
@@ -184,7 +148,48 @@ public class GridLayout {
 
         pane.add(tripCostLabel, 0, 8);
         pane.add(tripCostOutput, 1, 8);
+
+        // annon function for calculating trip cost
+        calcButton.setOnAction((ActionEvent e) -> {
+
+            TripCost tripCost;
+            tripCostOutput.setText("");
+
+
+
+
+            try {
+                if(attractionsInput.getText().isEmpty()) {
+                    attractionsInput.setText("0");
+                };
+                if(foodCostInput.getText().isEmpty()) {
+                    foodCostInput.setText("0");
+                };
+                if(hotelCostInput.getText().isEmpty()) {
+                    hotelCostInput.setText("0");
+                };
+                if(numberOfDaysInput.getText().isEmpty()) {
+                    numberOfDaysInput.setText("0");
+                };
+                tripCost = new TripCost(Double.parseDouble(gasInput.getText()), Double.parseDouble(distanceInput.getText()),Double.parseDouble(mileageInput.getText()),
+                        Integer.parseInt(numberOfDaysInput.getText()), Double.parseDouble(foodCostInput.getText()), Double.parseDouble(hotelCostInput.getText()),
+                        Integer.parseInt(attractionsInput.getText()), unitForDistance.getValue(), unitForFuelCost.getValue(), unitForEfficiency.getValue());
+
+                // logic for unit conversions
+
+                //convert km/l to mpg
+//                if(unitForDistance.getValue().equals("kilometers") && gasMil) {
+//                    tripCost.convertMilesToKilometers();
+//                }
+                tripCostOutput.setText(String.valueOf(tripCost.totalCost() ));
+            }
+            catch(Exception e1) {
+                tripCostOutput.setText("ERROR: Invalid input");
+                return;
+            }
+        });
     }
+
 
     public GridPane getGrid() {
         return pane;
@@ -193,7 +198,7 @@ public class GridLayout {
 }
 
 
-
+// if not using annon function for calculating trip cost
 class CalculateTripHandlerClass implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent e) {
@@ -203,10 +208,6 @@ class CalculateTripHandlerClass implements EventHandler<ActionEvent> {
         //call other methods to calc trip here
 
     }
-
-//	@Override
-//	public void handle(ActionEvent arg0) {
-//		// TODO Auto-generated method stub
-//
-//	}
 }
+
+
