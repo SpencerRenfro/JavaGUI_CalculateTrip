@@ -1,3 +1,6 @@
+// Spencer Renfro
+//Project3
+// 11-24-2024
 package com.example.demo;
 
 import java.util.Objects;
@@ -63,39 +66,13 @@ public final class TripCost {
         System.out.println("Distance: " + distance + " " + unitForDistance);
         System.out.println("Fuel Efficiency: " + fuelEfficiency + " " + unitForEfficiency);
         System.out.println("Fuel Cost: $" + fuelCost + " " + unitForFuelCost);
-        calcVolumeFuelUsed();
+
 
 //        System.out.println("total cost: " + Math.round((gasolineCost() + hotel_and_foodCost() + attractions) * 100.0) / 100.0);
         return Math.round((gasolineCost() + hotel_and_foodCost() + attractions) * 100.0) / 100.0;
     }
 
-    public void calcVolumeFuelUsed() {
-        double litersUsed = 0.0;
-        double gallonsUsed = 0.0;
 
-        // Convert units if necessary
-        if (Objects.equals(unitForDistance, "miles") && Objects.equals(unitForEfficiency, "miles/gallon")) {
-            gallonsUsed = distance / fuelEfficiency; // Gallons directly
-            litersUsed = gallonsUsed * 3.78541; // Convert gallons to liters
-        } else if (Objects.equals(unitForDistance, "kilometers") && Objects.equals(unitForEfficiency, "kilometers/liter")) {
-            litersUsed = distance / fuelEfficiency; // Liters directly
-            gallonsUsed = litersUsed / 3.78541; // Convert liters to gallons
-        } else if (Objects.equals(unitForDistance, "miles") && Objects.equals(unitForEfficiency, "kilometers/liter")) {
-            // Convert distance to kilometers
-            double distanceInKm = distance * 1.60934;
-            litersUsed = distanceInKm / fuelEfficiency; // Liters directly
-            gallonsUsed = litersUsed / 3.78541; // Convert liters to gallons
-        } else if (Objects.equals(unitForDistance, "kilometers") && Objects.equals(unitForEfficiency, "miles/gallon")) {
-            // Convert fuel efficiency to km/L
-            double efficiencyInKmPerLiter = fuelEfficiency * 0.425144;
-            litersUsed = distance / efficiencyInKmPerLiter; // Liters directly
-            gallonsUsed = litersUsed / 3.78541; // Convert liters to gallons
-        }
-
-        // Print results
-        System.out.println("Gallons used: " + gallonsUsed);
-        System.out.println("Liters used: " + litersUsed);
-    }
 
 
 }

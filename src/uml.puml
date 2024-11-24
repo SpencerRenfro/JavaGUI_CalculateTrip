@@ -1,0 +1,36 @@
+@startuml
+class TripCost {
+    - double fuelCost
+    - double distance
+    - double fuelEfficiency
+    - final int numberOfDays
+    - final double foodCost
+    - final double hotelCost
+    - final int attractions
+    - final String unitForDistance
+    - final String unitForFuelCost
+    - final String unitForEfficiency
+    + TripCost(double, double, double, int, double, double, int, String, String, String)
+    + double gasolineCost()
+    + double hotel_and_foodCost()
+    + double totalCost()
+    + void calcVolumeFuelUsed()
+}
+
+class Project3 {
+    - GridPane pane
+    - TextField distanceInput
+    - TextField gasInput
+    - TextField mileageInput
+    - TextField numberOfDaysInput
+    - TextField foodCostInput
+    - TextField hotelCostInput
+    - TextField attractionsInput
+    - TextField tripCostOutput
+    + Project3()
+    + void start(Stage)
+    + static void main(String[])
+}
+
+Project3 "1" *-- "1" TripCost
+@enduml

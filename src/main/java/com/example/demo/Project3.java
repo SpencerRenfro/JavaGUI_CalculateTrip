@@ -1,4 +1,12 @@
+// Spencer Renfro
+//Project3
+// 11-24-2024
+
+
 package com.example.demo;
+
+
+
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -14,7 +22,9 @@ import javafx.scene.control.ComboBox;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-
+//alerts
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 public class Project3 extends Application {
 
     private final GridPane pane;
@@ -57,6 +67,7 @@ public class Project3 extends Application {
         hotelCostInput = new TextField();
         attractionsInput = new TextField();
         tripCostOutput = new TextField();
+        // Set output field to read only
         tripCostOutput.setEditable(false);
 
 
@@ -172,6 +183,31 @@ public class Project3 extends Application {
                 if(numberOfDaysInput.getText().isEmpty()) {
                     numberOfDaysInput.setText("0");
                 };
+
+                if(mileageInput.getText().isEmpty() || mileageInput.getText().equals("0")) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Alert");
+                    alert.setHeaderText("Input Error");
+                    alert.setContentText("Error: Gas Mileage cannot be 0 or empty");
+
+                    // Display the alert
+                    alert.showAndWait();
+                    throw new Exception();
+                };
+                if (Double.parseDouble(mileageInput.getText()) < 0 ||
+                        Double.parseDouble(gasInput.getText()) < 0 ||
+                        Integer.parseInt(numberOfDaysInput.getText()) < 0 ||
+                        Double.parseDouble(foodCostInput.getText()) < 0 ||
+                        Double.parseDouble(hotelCostInput.getText()) < 0 ||
+                        Integer.parseInt(attractionsInput.getText()) < 0)
+                {                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Alert");
+                    alert.setHeaderText("Error: Error with input values, cannot be negative");
+
+                    alert.showAndWait();
+                    throw new Exception();
+                };
+
 
                 tripCost = new TripCost(Double.parseDouble(gasInput.getText()), Double.parseDouble(distanceInput.getText()),Double.parseDouble(mileageInput.getText()),
                         Integer.parseInt(numberOfDaysInput.getText()), Double.parseDouble(foodCostInput.getText()), Double.parseDouble(hotelCostInput.getText()),
